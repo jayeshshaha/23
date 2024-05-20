@@ -1,0 +1,124 @@
+<form #employeeForm="ngForm" (ngSubmit)="submitForm(employeeForm)">
+    <div>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName"  name="FirstName" [(ngModel)]="employee.FirstName" required minlength="2" maxlength="50" #FirstName="ngModel" >
+        <div *ngIf="FirstName.invalid && FirstName.touched">
+            <p>First Name is required, with a minimum length of 2 and a maximum length of 50 characters.</p>
+        </div>
+    </div>
+
+    <div>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName"  name="LastName" [(ngModel)]="employee.LastName" required minlength="2" maxlength="50" #LastName="ngModel">
+        <div *ngIf="LastName.invalid && LastName.touched">
+            <p>Last Name is required, with a minimum length of 2 and a maximum length of 50 characters.</p>
+        </div>
+    </div>
+
+    <div>
+        <label>Gender:</label>
+        <label for="male">
+            <input type="radio" name="Gender" value="Male" required="true" [(ngModel)]="employee.Gender" > Male
+        </label>
+        <label for="female">
+            <input type="radio" name="Gender" value="Female" required="true" [(ngModel)]="employee.Gender" > Female
+        </label>
+    </div>
+
+    <div>
+        <label for="Email">Email:</label>
+        <input type="email" name="Email" id="email" required  [(ngModel)]="employee.Email"  #email="ngModel">
+        <div *ngIf="email.invalid && email.touched">
+            <p>Email is required and must be in a valid email format.</p>
+        </div>
+    </div>
+
+
+    <div>
+        <label for="TermsOfConditions">Terms and Condtions:</label>
+        <input type="checkbox" name="TermsOfConditions" id="address" required   [(ngModel)]="employee.TermsOfConditions"  #TermsOfConditions="ngModel">
+        <div *ngIf="TermsOfConditions.invalid && TermsOfConditions.touched">
+            <p>Terms and Conditions checkbox must be checked.</p>
+        </div>
+    </div>
+
+    <div>
+        <label for="Address">Address:</label>
+        <input type="text" name="Address" id="address" required  [(ngModel)]="employee.ContactDetails.Address"  #Address="ngModel">
+        <div *ngIf="Address.invalid && Address.touched">
+            <p>Address is required.</p>
+        </div>
+    </div>
+
+
+
+  
+    <div>
+        <label for="Phone">Phone:</label>
+        <input type="text" name="Phone" id="phone" required  [(ngModel)]="employee.ContactDetails.Phone"  #Phone="ngModel">
+        <div *ngIf="Phone.invalid && Phone.touched">
+            <p>Phone is required.</p>
+        </div>
+    </div>
+
+
+    <button type="submit" [disabled]="employeeForm.invalid">Submit</button>
+</form>
+
+
+----------------------------------------------------------------------------------------
+
+import { Component, OnInit } from '@angular/core';
+import { Employee } from '../models/employee.model';
+import { NgForm } from '@angular/forms';
+
+@Component({
+  selector: 'app-employee-form',
+  templateUrl: './employee-form.component.html',
+  styleUrls: ['./employee-form.component.css']
+})
+export class EmployeeFormComponent implements OnInit {
+
+  employee:Employee = {
+    FirstName : "",
+    LastName : "",
+    Gender : "",
+    Email : "",
+    TermsOfConditions : false,
+    ContactDetails : {
+      Address : "",
+      Phone : ""
+    }
+  };
+
+  submitForm(form:NgForm){
+      console.log(form);
+      console.log(this.employee);
+      
+  }
+
+
+  constructor() { }
+
+  
+
+  ngOnInit(): void {
+  }
+  
+}
+
+----------------------------------------------------------------------------------------
+
+export class Employee{
+    constructor(
+    public FirstName: string,
+    public LastName: string,
+    public Gender: string,
+    public Email: string,
+    public TermsOfConditions: boolean,
+    public ContactDetails: {
+      Address: string,
+      Phone: string
+    }
+  ) {}
+}

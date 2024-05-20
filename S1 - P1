@@ -1,0 +1,65 @@
+<p>products works!</p>
+<table class="table" border="1">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Release Date (Short)</th>
+            <th>Release Date (Long)</th>
+            <th>Price (Currency)</th>
+            <th>Discount (%)</th>
+            <th>Stock Code (Digit Count) </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let i of products">
+            <td id="name">{{ i.name | uppercase }}</td>
+            <td id="shortDate">{{ i.releaseDate | date:'shortDate' }}</td>
+            <td id="longDate">{{ i.releaseDate | date:'longDate' }}</td> 
+            <td id="currency">{{ i.price | currency }}</td>
+            <td id="percent"></td> 
+            <td id="countDigits">{{ i.stockCode | countDigit }}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+---------------------------------------------------------------
+
+import { Component, OnInit } from '@angular/core';
+
+interface ProductType {
+  name:string,
+    price:number,
+    releaseDate:Date,
+    stockCode:string
+}
+
+@Component({
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.css']
+})
+export class ProductsComponent implements OnInit {
+
+
+  constructor() { 
+  }
+
+  products:ProductType[] = [{
+    name:"Product A",
+     price:321,
+    releaseDate:new Date(),
+    stockCode:"32"
+    },{
+      name:"Product B",
+      price:45.22,
+      releaseDate:new Date(),
+      stockCode:"23"
+    }
+  ];
+  
+
+  ngOnInit(): void {
+  }
+
+}

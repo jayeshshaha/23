@@ -1,0 +1,129 @@
+<h2>Contact Form</h2>
+
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+
+    <div>
+        <label for="firstName">First Name</label>
+        <br>
+        <input type="text" formControlName="firstName">
+        <br>
+        <span class="text-red" *ngIf="firstName && firstName.touched && firstName.invalid">First name is required.</span>
+    </div>
+
+    <div>
+        <label for="lastName">Last Name</label>
+        <br>
+        <input type="text" formControlName="lastName">
+        <br>
+        <span class="text-red" *ngIf="lastName && lastName.touched && lastName.invalid">Last name is required.</span>
+    </div>
+
+    <div>
+        <label for="email">Email</label>
+        <br>
+        <input type="email" formControlName="email">
+        <br>
+        <span class="text-red" *ngIf="email && email.touched && email.invalid"><Em></Em>Email is required.</span>
+    </div>
+
+    <div formGroupName="address">
+        <h4>Address</h4>
+        <div>
+            <label for="street">Street</label>
+            <br>
+            <input type="text" formControlName="street">
+        </div>
+        <div>
+            <label for="city">City</label>
+            <br>
+            <input type="text" formControlName="city">
+        </div>
+        <div>
+            <label for="state">State</label>
+            <br>
+            <input type="text" formControlName="state">
+        </div>
+        <div>
+            <label for="street">Postal Code</label>
+            <br>
+            <input type="text" formControlName="postalCode">
+        </div>
+    </div>
+
+    <div formGroupName="subjectDetails" >
+        <h4>Subject Details</h4>
+        <div>
+            <label for="subject">Subject</label>
+            <br>
+            <input type="text" formControlName="subject">
+        </div>
+        <div>
+            <label for="message">Message</label>
+            <br>
+            <textarea formControlName="message" cols="30" rows="5"></textarea>
+        </div>
+    </div>
+    <br>
+    <button type="submit" [disabled]="contactForm.invalid">Submit</button>
+</form>
+
+----------------------------------------------------------------------------------------
+
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+
+@Component({
+  selector: 'app-contact-form',
+  templateUrl: './contact-form.component.html',
+  styleUrls: ['./contact-form.component.css']
+})
+export class ContactFormComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
+  contactForm:FormGroup = new FormGroup({
+    firstName: new FormControl("",[Validators.required,Validators.minLength(2)]),
+    lastName: new FormControl("",[Validators.required,Validators.minLength(2)]),
+    email: new FormControl("",[Validators.required,Validators.email]),
+    address: new FormGroup({
+      street: new FormControl("") ,
+      city: new FormControl("") ,
+      state: new FormControl(""),
+      postalCode: new FormControl("")
+     }),
+    subjectDetails: new FormGroup({
+      subject: new FormControl(""),
+      message: new FormControl("")
+    })
+    
+  });
+
+  get firstName(){
+    return this.contactForm.get("firstName");
+  }
+
+  get lastName(){
+    return this.contactForm.get("lastName");
+  }
+
+  get email(){
+    return this.contactForm.get("email");
+  }
+
+  onSubmit(){
+      console.log(this.contactForm.value);
+      this.contactForm.reset();
+  }
+
+
+}
+
+----------------------------------------------------------------------------------------
+
+.text-red{
+    color: red;
+}

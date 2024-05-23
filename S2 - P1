@@ -68,9 +68,10 @@
 
 ----------------------------------------------------------------------------------------
 
+  
 import { Component, OnInit } from '@angular/core';
-import { Employee } from '../models/employee.model';
 import { NgForm } from '@angular/forms';
+import { Employee } from '../models/employee.model';
 
 @Component({
   selector: 'app-employee-form',
@@ -79,17 +80,20 @@ import { NgForm } from '@angular/forms';
 })
 export class EmployeeFormComponent implements OnInit {
 
-  employee:Employee = {
-    FirstName : "",
-    LastName : "",
-    Gender : "",
-    Email : "",
-    TermsOfConditions : false,
-    ContactDetails : {
-      Address : "",
-      Phone : ""
-    }
-  };
+  constructor() {
+    this.employee['FirstName']='sam';
+    this.employee['LastName']='sam';
+    this.employee['Gender']='sam';
+    this.employee['Email']='sam';
+    this.employee['TermsOfConditions']= true;
+    this.employee['ContactDetails'] = {
+      ['Address']: '123 Main St',
+      ['Phone']: '555-123-4567'
+    };
+   }
+
+  employee:Employee = new Employee();
+
 
   submitForm(form:NgForm){
       console.log(form);
@@ -98,27 +102,30 @@ export class EmployeeFormComponent implements OnInit {
   }
 
 
-  constructor() { }
-
-  
-
   ngOnInit(): void {
   }
-  
+
 }
+
 
 ----------------------------------------------------------------------------------------
 
 export class Employee{
-    constructor(
-    public FirstName: string,
-    public LastName: string,
-    public Gender: string,
-    public Email: string,
-    public TermsOfConditions: boolean,
+  public FirstName: string="";
+  public LastName: string ="";
+    public Gender: string  ="";
+    public Email: string ="";
+    public TermsOfConditions:boolean  = false;
     public ContactDetails: {
-      Address: string,
-      Phone: string
+      Address: string
+      Phone: string;
     }
-  ) {}
+    constructor( ) {
+
+    }
+  
 }
+
+
+
+
